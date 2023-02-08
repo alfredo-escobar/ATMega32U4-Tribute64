@@ -8,8 +8,6 @@
 #define pinOBLED 21  //Onboard LED pin
 
 
-bool buttonStartBefore;
-bool buttonSelectBefore;
 byte buttonStatus[15];
 
 /*
@@ -56,6 +54,9 @@ byte buttonStatus[15];
 #define BUTTONCLEFT 13
 #define BUTTONCRIGHT 14
 
+#define N64_STICKX_PIN A1
+#define N64_STICKY_PIN A2
+
 Bounce joystickUP = Bounce();
 Bounce joystickDOWN = Bounce();
 Bounce joystickLEFT = Bounce();
@@ -73,7 +74,6 @@ Bounce buttonRB = Bounce();
 Bounce buttonLT = Bounce();
 Bounce buttonRT = Bounce();
 Bounce buttonSTART = Bounce();
-
 
 
 void setupPins(){
@@ -124,8 +124,6 @@ void setupPins(){
 
 
 void setup() {
-    buttonStartBefore = false;
-    buttonSelectBefore = false;
     setupPins();
     SetupHardware();
     GlobalInterruptEnable();
@@ -178,15 +176,8 @@ void processDPAD(){
 }
 
 void processLANALOG(){
-    if ((buttonStatus[BUTTONUP]) && (buttonStatus[BUTTONRIGHT])){ReportData.LY = 0;ReportData.LX = 255;}
-    else if ((buttonStatus[BUTTONDOWN]) && (buttonStatus[BUTTONRIGHT])) {ReportData.LY = 255;ReportData.LX = 255;}
-    else if ((buttonStatus[BUTTONDOWN]) && (buttonStatus[BUTTONLEFT])) {ReportData.LY = 255;ReportData.LX = 0;}
-    else if ((buttonStatus[BUTTONUP]) && (buttonStatus[BUTTONLEFT])){ReportData.LY = 0;ReportData.LX = 0;}
-    else if (buttonStatus[BUTTONUP]) {ReportData.LY = 0;ReportData.LX = 128;}
-    else if (buttonStatus[BUTTONDOWN]) {ReportData.LY = 255;ReportData.LX = 128;}
-    else if (buttonStatus[BUTTONLEFT]) {ReportData.LX = 0;ReportData.LY = 128;}
-    else if (buttonStatus[BUTTONRIGHT]) {ReportData.LX = 255;ReportData.LY = 128;}
-    else {ReportData.LX = 128;ReportData.LY = 128;}
+    ReportData.LX = analogRead(N64_STICKX_PIN) >> 2;
+    ReportData.LY = analogRead(N64_STICKY_PIN) >> 2;
 }
 
 void processRANALOG(){

@@ -133,7 +133,7 @@ void setup() {
 void loop() {
     buttonRead();
     //processDPAD()
-    //processLANALOG();
+    processLANALOG();
     processRANALOG();
     buttonProcessing();
     HID_Task();
@@ -176,8 +176,25 @@ void processDPAD(){
 }
 
 void processLANALOG(){
-    ReportData.LX = analogRead(N64_STICKX_PIN) >> 2;
-    ReportData.LY = analogRead(N64_STICKY_PIN) >> 2;
+    int LX = analogRead(N64_STICKX_PIN);
+    LX += (( (int)(0.027 * 255 / 2) ) << 2);
+    LX -= 512;
+    LX *= (1 / 0.674);
+    LX += 512;
+    LX >>= 2;
+    if (LX > 255) {LX = 255;}
+    if (LX < 0) {LX = 0;}
+    ReportData.LX = (uint8_t) LX;
+
+    int LY = analogRead(N64_STICKY_PIN);
+    LY += (( (int)(-0.106 * 255 / 2) ) << 2);
+    LY -= 512;
+    LY *= (1 / 0.635);
+    LY += 512;
+    LY >>= 2;
+    if (LY > 255) {LY = 255;}
+    if (LY < 0) {LY = 0;}
+    ReportData.LY = (uint8_t) LY;
 }
 
 void processRANALOG(){

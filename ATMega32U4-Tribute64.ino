@@ -54,8 +54,8 @@ byte buttonStatus[15];
 #define BUTTONCLEFT 13
 #define BUTTONCRIGHT 14
 
-#define N64_STICKX_PIN A1
-#define N64_STICKY_PIN A2
+#define N64_STICKX_PIN A9
+#define N64_STICKY_PIN A8
 
 Bounce joystickUP = Bounce();
 Bounce joystickDOWN = Bounce();
@@ -77,24 +77,24 @@ Bounce buttonSTART = Bounce();
 
 
 void setupPins(){
-    joystickUP.attach(0,INPUT_PULLUP);
-    joystickDOWN.attach(1,INPUT_PULLUP);
-    joystickLEFT.attach(2,INPUT_PULLUP);
+    joystickUP.attach(2,INPUT_PULLUP);
+    joystickDOWN.attach(0,INPUT_PULLUP);
+    joystickLEFT.attach(1,INPUT_PULLUP);
     joystickRIGHT.attach(3,INPUT_PULLUP);
 
-    buttonA.attach(4,INPUT_PULLUP);
-    buttonB.attach(5,INPUT_PULLUP);
-    buttonSTART.attach(6,INPUT_PULLUP);
+    buttonA.attach(20,INPUT_PULLUP);
+    buttonB.attach(21,INPUT_PULLUP);
+    buttonSTART.attach(5,INPUT_PULLUP);
 
-    buttonCUP.attach(7,INPUT_PULLUP);
-    buttonCDOWN.attach(8,INPUT_PULLUP);
-    buttonCLEFT.attach(9,INPUT_PULLUP);
-    buttonCRIGHT.attach(10,INPUT_PULLUP);
+    buttonCUP.attach(14,INPUT_PULLUP);
+    buttonCDOWN.attach(19,INPUT_PULLUP);
+    buttonCLEFT.attach(18,INPUT_PULLUP);
+    buttonCRIGHT.attach(15,INPUT_PULLUP);
 
-    buttonLB.attach(14,INPUT_PULLUP);
-    buttonRB.attach(15,INPUT_PULLUP);
-    buttonLT.attach(16,INPUT_PULLUP);
-    buttonRT.attach(18,INPUT_PULLUP);
+    buttonLB.attach(7,INPUT_PULLUP);
+    buttonRB.attach(10,INPUT_PULLUP);
+    buttonLT.attach(6,INPUT_PULLUP);
+    buttonRT.attach(16,INPUT_PULLUP);
     
 
     joystickUP.interval(MILLIDEBOUNCE);

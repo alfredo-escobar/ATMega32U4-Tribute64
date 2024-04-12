@@ -177,23 +177,29 @@ void processDPAD(){
 
 void processLANALOG(){
     int LX = analogRead(N64_STICKX_PIN);
-    LX += (( (int)(0.027 * 255 / 2) ) << 2);
-    LX -= 512;
-    LX *= (1 / 0.674);
-    LX += 512;
-    LX >>= 2;
+    LX += (( (int)(0.027 * 255 / 2) ) << 2); //center the axis
+    LX -= 512; //center was around 512, now it's around 0
+    LX *= 1.615; //adjust the range
+    LX += 512; //center was around 0, now it's around 512
+    LX >>= 2; //center was around 512, now it's around 128
     if (LX > 255) {LX = 255;}
     if (LX < 0) {LX = 0;}
-    ReportData.LX = (uint8_t) LX;
 
     int LY = analogRead(N64_STICKY_PIN);
-    LY += (( (int)(-0.106 * 255 / 2) ) << 2);
-    LY -= 512;
-    LY *= (1 / 0.635);
-    LY += 512;
-    LY >>= 2;
+    LY += (( (int)(-0.106 * 255 / 2) ) << 2); //center the axis
+    LY -= 512; //center was around 512, now it's around 0
+    LY *= 1.615; //adjust the range
+    LY += 512; //center was around 0, now it's around 512
+    LY >>= 2; //center was around 512, now it's around 128
     if (LY > 255) {LY = 255;}
     if (LY < 0) {LY = 0;}
+
+    if ((LX > 118) && (LX < 138) && (LY > 118) && (LY < 138)) {
+      LX = 128;
+      LY = 128;
+    }
+
+    ReportData.LX = (uint8_t) LX;
     ReportData.LY = (uint8_t) LY;
 }
 
